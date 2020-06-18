@@ -11,6 +11,7 @@ import DayList from "components/DayList";
 import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from "components/InterviewerList";
 import Appointment from "components/Appointment";
+import Status from "components/Appointment/Status";
 import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
@@ -131,7 +132,7 @@ storiesOf("Button", module)
           />
         ));
 
-        storiesOf("Appointment", module)
+      storiesOf("Appointment", module)
         .addParameters({
           backgrounds: [{ name: "white", value: "#fff", default: true }]
         })
@@ -154,3 +155,6 @@ storiesOf("Button", module)
             onCancel={action("onCancel")}
           />
         ))
+        .add("Saving", () => <Status message="Saving" />)
+        .add("Deleting", () => <Status message="Deleting" />)
+      
