@@ -8,6 +8,7 @@ import "index.scss";
 import Button from "components/Button";
 import DayListItem from "components/DayListItem";
 import DayList from "components/DayList";
+import Form from "components/Appointment/Form";
 import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from "components/InterviewerList";
 import Appointment from "components/Appointment";
@@ -167,4 +168,20 @@ storiesOf("Button", module)
             onClose={action("onClose")}
           />
         ))
+        .add("Create", () => (
+          <Form
+            interviewers={interviewers}
+            onSave={action("onSave")}
+            onCancel={action("onCancel")}
+          />
+        ))
+        .add("Edit", () => (
+          <Form
+            name="Archie Cohen"
+            interviewers={interviewers}
+            interviewer={interviewers[0].id}
+            onSave={action("onSave")}
+            onCancel={action("onCancel")}
+          />
+        ));
       
