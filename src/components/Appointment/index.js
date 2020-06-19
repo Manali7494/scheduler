@@ -8,12 +8,14 @@ import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
 import Form from "components/Appointment/Form";
+import Status from "components/Appointment/Status";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const EDIT = "EDIT";
 const CONFIRM = "CONFIRM";
+const SAVING = "SAVING";
 
 export default function Appointment(props) {
   
@@ -26,9 +28,11 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
-    props.bookInterview(props.id, interview); // important for props.id to be passed into
 
-    transition(SHOW);
+    transition(SAVING);
+
+    props.bookInterview(props.id, interview).then(() => transition(SHOW)); // important for props.id to be passed into
+    // Also, use .then for async functions
   }
 
   return (
@@ -55,6 +59,8 @@ export default function Appointment(props) {
           onSave={save}
         />
       )}
+      {mode === SAVING && <Status message="Saving" />}
+
 
     </article>
   );
