@@ -26,12 +26,18 @@ export default function Application(props) {
     );
   }, []);
 
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+  }
+
+  
+
   const interviewers = getInterviewersForDay(state, state.day);
 
   const appointments = getAppointmentsForDay(state, state.day).map(
     appointment => {
       return (
-        <Appointment key={appointment.id} {...appointment} interviewers={interviewers} />
+        <Appointment key={appointment.id} {...appointment} interviewers={interviewers} bookInterview={bookInterview} />
       );
     }
   );
