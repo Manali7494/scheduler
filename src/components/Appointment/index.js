@@ -14,8 +14,8 @@ const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const EDIT = "EDIT";
-const CONFIRM = "CONFIRM";
 const SAVING = "SAVING";
+const DELETING = "DELETING";
 
 export default function Appointment(props) {
   
@@ -35,6 +35,15 @@ export default function Appointment(props) {
     // Also, use .then for async functions
   }
 
+
+  function destroy() {
+    transition(DELETING);
+
+    props
+      .cancelInterview(props.id)
+      .then(() => transition(EMPTY))
+  }
+
   return (
     <article className="appointment">
       <Header time={props.time} />
@@ -43,7 +52,7 @@ export default function Appointment(props) {
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
-          onDelete={() => transition(CONFIRM)}
+          onDelete={destroy}
           onEdit={() => transition(EDIT)}
         />
       )}
@@ -60,6 +69,7 @@ export default function Appointment(props) {
         />
       )}
       {mode === SAVING && <Status message="Saving" />}
+      {mode === DELETING && <Status message="Deleting" />}
 
 
     </article>
