@@ -13,3 +13,12 @@ export function getInterviewersForDay(state, day) {
 
   return found.interviewers.map(id => state.interviewers[id]);
 }
+
+export function getInterview(state, interview) {
+  return (
+    interview && {
+      ...interview,
+      interviewer: state.interviewers[interview.interviewer]
+    }
+  );
+}
