@@ -13,6 +13,16 @@ export default function Application(props) {
     appointments: {}
   });
 
+
+  const getSpotsForDay = (day, appointments) => {
+    return day.appointments.length -
+    day.appointments.reduce(
+      (count, id) => (appointments[id].interview ? count + 1 : count),
+      0
+    );
+  
+  }
+
   const setDay = day => setState(state => ({ ...state, day }));
 
   useEffect(() => {
@@ -36,10 +46,19 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     }
+    const getSpotsForDay = day =>
+    day.appointments.length -
+    day.appointments.reduce(
+      (count, id) => (appointments[id].interview ? count + 1 : count),
+      0
+    );
+
+    const days = state.days.map((day) => day.appointments.includes(id) ? { ...day, spots: getSpotsForDay(day, appointments) } : day)
     return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
       setState({
         ...state,
-        appointments
+        appointments,
+        days
       })
     });
   }
@@ -54,10 +73,13 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     }
+    const days = state.days.map((day) => day.appointments.includes(id) ? { ...day, spots: getSpotsForDay(day, appointments) } : day)
+
     return axios.delete(`/api/appointments/${id}`).then(() => {
       setState({
         ...state,
-        appointments
+        appointments,
+        days
       })
     });
   }
@@ -71,7 +93,7 @@ export default function Application(props) {
       );
     }
   );
-  
+
 
   return (
     <main className="layout">
